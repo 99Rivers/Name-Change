@@ -2,59 +2,61 @@
 	
 	$count = $_POST["count"];
 	settype($count, "int");
-//El loop és una mica extrany. En comptes d'accedir a les cançons amb el $_POST[][], faig servir l'array files directament. Per algun motiu funcion millor. 
-	for($i = 0; $i <= $count; $i++){
-		//Part de pujada de l'arxiu
-		$directori = "pujades/";
-		$arxiu = $directori . basename($_FILES["song"]["name"][$i]);
-		$pujadaOK = 1;
-		$extensio = strtolower(pathinfo($arxiu,PATHINFO_EXTENSION));
 
-		// Comprovar que sigui un arxiu d'àudio, mp3 o flac
+//Instead of using the $_POST array, I use the $_FILES one to access the data. It just seems to work better. 
+
+	for($i = 0; $i <= $count; $i++){
+		//Chosing the destination of the file
+		$directory = "uploads/";
+		$file = $directory . basename($_FILES["song"]["name"][$i]);
+		$uploadOK = 1;
+		$extension = strtolower(pathinfo($file,PATHINFO_EXTENSION));
+
+		// Checking if it is an audio file (mp3 o flac).
 
 		if(isset($_POST["submit"])) {
-		    if($extensio == "mp3" or $extensio == "flac") {
-		        echo "L'arxiu és d'audio - " . $extensio . ". <br />";
-		        $pujadaOK = 1;
+		    if($extension == "mp3" or $extension == "flac") {
+		        echo "File has extension - " . $extension . ". <br />";
+		        $uploadOK = 1;
 		    } 
 		    else {
-		        echo "Extensió incorrecta - feu servir mp3 o FLAC.<br />";
-		        $pujadaOK = 0;
+		        echo "Your file is not supported. Please upload mp3 or FLAC files.<br />";
+		        $uploadOK = 0;
 		    }
 		}
 
-		// Comprovar errors i pujar
-		if ($pujadaOK == 0) {
-		    echo "Hi hagut algun error en la pujada. <br />";
+		// Uploading the file
+		if ($uploadOK == 0) {
+		    echo "Something went wrong uploading your files. <br />";
 		} 
 		else {
-		    if (move_uploaded_file($_FILES["song"]["tmp_name"][$i], $arxiu)) {
-		        echo "L'arxiu ". basename( $_FILES["song"]["name"][$i]). " s'ha pujat amb èxit. <br />";
+		    if (move_uploaded_file($_FILES["song"]["tmp_name"][$i], $file)) {
+		        echo "The file ". basename( $_FILES["song"]["name"][$i]). " has been uploaded successfully. <br />";
 		    } 
 		    else {
-		        echo "L'arxiu" . basename( $_FILES["song"]["name"][$i]) . "no s'ha pogut pujar. <br />";
+		        echo "The file " . basename( $_FILES["song"]["name"][$i]) . " has been uploaded successfully. <br />";
 		    }
 		}
 
-		//Canviar el nom a l'arxiu
+		//Changing the file's name
 
-		$autor = $_POST["author" . $i];
+		$author = $_POST["author" . $i];
 		$trackname = strtoupper($_POST["track" . $i]);
 		$trackno = $_POST["trackno" . $i];
-		$nomNou = $trackno . "-" . $autor . " -- " . $trackname . "." . $extensio;
-		$arxiuFinal = $directori . $nomNou;
-		$nomOk = 1;
+		$newName = $trackno . "-" . $author . " -- " . $trackname . "." . $extension;
+		$finalFile = $directory . $newName;
+		$nameOK = 1;
 
-		if(rename($arxiu, $arxiuFinal)){
-			echo "El nom del vostre arxiu s'ha canviat amb èxit. Ara és: " . $nomNou . "<br />";
-			$nomOk = 1;
+		if(rename($file, $finalFile)){
+			echo "Your file's name was changed successfully. It is now called: " . $newName . "<br />";
+			$nameOK = 1;
 		}
 		else{
-			$nomOk = 0;
+			$nameOK = 0;
 		}
 	}
 
-echo "Feu clic <a href='descarrega.php'>ací</a> per a descarregar els arxius.";
+echo "Click <a href='download.php'>here</a> to download your newly named files.";
 
 
 

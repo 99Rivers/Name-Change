@@ -1,7 +1,7 @@
 <?php
 
-//Llista dels arxius a pujades
-$dir = "pujades/";
+//Llista dels arxius a uploads
+$dir = "uploads/";
 $list = scandir($dir);
 
 $zipname = $dir . "0file.zip";

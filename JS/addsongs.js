@@ -1,4 +1,4 @@
-//Set global variables for the counts
+//Set a global variable for the count
 
 var count = 0;
 function addSongs(){
@@ -26,7 +26,7 @@ function addSongs(){
 	var newAuthor =  document.createElement("input");;
 	newAuthor.type = "text";
 	newAuthor.name = "author" + count;
-	newAuthor.placeholder = "Track Author";
+	newAuthor.placeholder = "Author";
 	newAuthor.style.margin = "3px 3px 3px 3px"
 	document.songform.appendChild(newAuthor);
 
@@ -51,7 +51,7 @@ function addSongs(){
 	var newSubmitButton = document.createElement("input");
 	newSubmitButton.type= "submit";
 	newSubmitButton.id = "go" + "0";
-	newSubmitButton.value ="Change my track names dawg"
+	newSubmitButton.value ="Canviar els noms"
 	document.songform.appendChild(newSubmitButton);
 
 }
