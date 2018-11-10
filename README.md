@@ -2,7 +2,7 @@
 
 This simple PHP app will change file names on bulk, with a certain format, and download them compressed in a zip file. 
 
-The interface is in catalan, change it as you please.
+2018-11-10 -> Currently working on drag and drop functionalities, as well as choosing the name format. Major update incoming.
 
 ## Authors
 
